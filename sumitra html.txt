@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Sumitra!</title>
+    <style>
+        :root {
+            --primary-pink: #ff4d6d;
+            --soft-cream: #fff0f3;
+            --dark-text: #590d22;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: var(--soft-cream);
+            color: var(--dark-text);
+            text-align: center;
+        }
+
+        /* Countdown Container */
+        #countdown-timer {
+            background: var(--primary-pink);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .heart-btn {
+            font-size: 100px;
+            cursor: pointer;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .wish-box {
+            display: none;
+            margin-top: 20px;
+            padding: 25px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.2);
+            width: 85%;
+            animation: fadeIn 1s ease;
+        }
+
+        /* Audio Player Styling */
+        .music-container {
+            margin: 20px 0;
+        }
+
+        audio {
+            width: 80%;
+            height: 35px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 15px;
+        }
+
+        .grid img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer { padding: 50px; opacity: 0.7; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <div id="countdown-timer">
+        Loading surprise...
+    </div>
+
+    <header>
+        <div class="heart-btn" onclick="revealWish()">❤️</div>
+        <h1 id="main-title">Wait for it...</h1>
+        
+        <div id="wish" class="wish-box">
+            <h2>Happy Birthday! 🎂</h2>
+            <p>You make every day brighter. I hope your day is as special as you are!</p>
+            
+            <div class="music-container">
+                <p style="font-size: 0.8rem;">Press play for a surprise 🎵</p>
+                <audio controls id="birthday-song">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+    </header>
+
+    <section style="background: white; padding: 20px 0;">
+        <h3>Our Favorites</h3>
+        <div class="grid">
+            <img src="https://via.placeholder.com/400" alt="Us">
+            <img src="https://via.placeholder.com/400" alt="Memory">
+            <img src="https://via.placeholder.com/400" alt="Us 2">
+            <img src="https://via.placeholder.com/400" alt="Memory 2">
+        </div>
+    </section>
+
+    <footer>
+        Made with love by G
+    </footer>
+
+    <script>
+        // Set the birthday date here (Year, Month - 1, Day, Hour, Minute)
+        const birthdayDate = new Date("2026-04-15T00:00:00").getTime();
+
+        const timerInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = birthdayDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            if (distance < 0) {
+                clearInterval(timerInterval);
+                document.getElementById("countdown-timer").innerHTML = "IT'S YOUR DAY! 🎉";
+                document.getElementById("main-title").innerHTML = "Ready for your surprise?";
+            } else {
+                document.getElementById("countdown-timer").innerHTML = 
+                    days + "d " + hours + "h " + minutes + "m " + seconds + "s left";
+                document.getElementById("main-title").innerHTML = "Counting down to the big day...";
+            }
+        }, 1000);
+
+        function revealWish() {
+            const wish = document.getElementById('wish');
+            wish.style.display = 'block';
+            
+            // Auto-play attempt (many browsers require user interaction first)
+            const song = document.getElementById('birthday-song');
+            song.play();
+
+            window.scrollTo({
+                top: wish.offsetTop - 100,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>
